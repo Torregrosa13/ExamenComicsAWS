@@ -1,5 +1,7 @@
+using Amazon.S3;
 using ExamenComicsAWS.Data;
 using ExamenComicsAWS.Repositories;
+using ExamenComicsAWS.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<RepositoryComics>();
+builder.Services.AddTransient<ServiceStorageS3>();
+builder.Services.AddAWSService<IAmazonS3>();
 builder.Services.AddDbContext<ComicsContext>(options =>
     options.UseMySQL(builder.Configuration.GetConnectionString("MySql")));
 var app = builder.Build();
